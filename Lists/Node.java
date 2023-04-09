@@ -12,6 +12,7 @@ public class Node{
         nextNode = null;
 
         data = 0;
+        size = 0;
     }
 
     public Node(int value){
@@ -32,7 +33,16 @@ public class Node{
     public Node getNext(){
         return nextNode;
     }
+
     public void setNext(Node next){
         nextNode = next;
+    }
+
+    public Node getPrevious(){
+        return prevNode;
+    }
+
+    public void setPrevious(Node prev){
+        prevNode = prev;
     }
 }
