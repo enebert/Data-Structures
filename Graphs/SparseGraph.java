@@ -26,10 +26,14 @@ public class SparseGraph<T> implements Graph<T>{
             return false;
         }
         adjacencyList.put(key, new LinkedList());
-        numVertices++;
+        this.numVertices++;
         return true;
     }
     
+    public void insertVertex(ArrayList<T> vList){
+        for(T v : vList) this.insertVertex(v);
+    }
+
     public boolean deleteVertex(T key, boolean directed){
         
         if(!adjacencyList.containsKey(key)) return false;
@@ -85,7 +89,13 @@ public class SparseGraph<T> implements Graph<T>{
     
     public Graph<T> subgraph(ArrayList<T> vertices){
         SparseGraph<T> sub = new SparseGraph<>();
-        
+        sub.insertVertex(vertices);
+
+        for(T item : vertices){
+            for(T v : adjacencyList.get(item)){
+                if(vertices.contains(v)) sub.insertEdge(new Edge<T>(item,v), true);
+            }
+        }
         return sub;
     }
     
