@@ -21,6 +21,15 @@ public class SparseGraph<T> implements Graph<T>{
         return list;
     }
     
+    public void create(ArrayList<Edge<T>> edgeList, boolean directed){
+        for(Edge<T> edge : edgeList){
+            if(!adjacencyList.contains(edge.getHead())) insertVertex(edge.getHead());
+            if(!adjacencyList.containsKey(edge.getTail())) insertVertex(edge.getTail());
+
+            insertEdge(edge, directed);
+        }
+    }
+
     public boolean insertVertex(T key){
         if(adjacencyList.containsKey(key)){
             return false;
@@ -69,6 +78,11 @@ public class SparseGraph<T> implements Graph<T>{
         return false;
     }
     
+    public boolean insertEdge(ArrayList<Edge<T>> edgeList, boolean directed){
+        for(Edge e : edgeList) if(!insertEdge(e, directed)) return false;
+        return true;
+    }
+
     public boolean deleteEdge(Edge<T> e, boolean directed){
         if(adjacencyList.containsKey(e.getHead()) && adjacencyList.containsKey(e.getTail())){
             if(directed){
