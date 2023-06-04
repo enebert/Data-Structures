@@ -133,7 +133,7 @@ public class SparseGraph<T> implements Graph<T>{
         return true;
     }
 
-    public static SparseGraph<Integer> random(int numVertices){
+    public static SparseGraph<Integer> random(int maxVertices){
         Random gen = new Random();
         int t;
         int h;
@@ -141,12 +141,12 @@ public class SparseGraph<T> implements Graph<T>{
         SparseGraph<Integer> randGraph = new SparseGraph<>();
         ArrayList<Edge<Integer>> edgeList = new ArrayList<>();
 
-        int numEdges = gen.nextInt(numVertices*(numVertices-1)/2) + 1;
+        int numEdges = gen.nextInt(maxVertices*(maxVertices-1)/2) + 1;
 
         for(int i=0; i < numEdges; i++){
             do{
-                t = gen.nextInt(numVertices);
-                h = gen.nextInt(numVertices);
+                t = gen.nextInt(maxVertices);
+                h = gen.nextInt(maxVertices);
                 e = new Edge<Integer>(t,h);
                 f = new Edge<Integer>(h,t);
             }while(edgeList.contains(e) || edgeList.contains(f) || t==h);
