@@ -2,7 +2,7 @@ import java.util.*;
 
 public class SparseGraph<T> implements Graph<T>{
     
-    private Hashtable<T, List<T>> adjacencyList;
+    private Hashtable<T, LinkedList<T>> adjacencyList;
     private int numVertices;
     private int numEdges;
     
@@ -34,7 +34,7 @@ public class SparseGraph<T> implements Graph<T>{
         if(adjacencyList.containsKey(key)){
             return false;
         }
-        adjacencyList.put(key, new LinkedList());
+        adjacencyList.put(key, new LinkedList<T>());
         this.numVertices++;
         return true;
     }
@@ -54,7 +54,7 @@ public class SparseGraph<T> implements Graph<T>{
                 if(adjacencyList.get(item).contains(key)) adjacencyList.get(item).remove(key);    
             }
         }else{
-            List<T> temp=adjacencyList.get(key);
+            LinkedList<T> temp=adjacencyList.get(key);
             adjacencyList.remove(key);
             for(T item : temp){
                 adjacencyList.get(item).remove(key);
@@ -79,7 +79,7 @@ public class SparseGraph<T> implements Graph<T>{
     }
     
     public boolean insertEdge(ArrayList<Edge<T>> edgeList, boolean directed){
-        for(Edge e : edgeList) if(!insertEdge(e, directed)) return false;
+        for(Edge<T> e : edgeList) if(!insertEdge(e, directed)) return false;
         return true;
     }
 
@@ -147,8 +147,8 @@ public class SparseGraph<T> implements Graph<T>{
             do{
                 t = gen.nextInt(numVertices);
                 h = gen.nextInt(numVertices);
-                e = new Edge(t,h);
-                f = new Edge(h,t);
+                e = new Edge<Integer>(t,h);
+                f = new Edge<Integer>(h,t);
             }while(edgeList.contains(e) || edgeList.contains(f) || t==h);
             edgeList.add(e);
         }
