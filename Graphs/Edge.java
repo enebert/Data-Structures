@@ -20,6 +20,20 @@ public class Edge<T> {
         weight = w;
     }
 
+    @Override
+    public String toString(){
+        return "(" + tail + "," + head + ")";
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == this) return true;
+        if(!(o instanceof Edge)) return false;
+
+        Edge e = (Edge) o;
+        return (e.getHead().equals(this.head) && e.getTail().equals(this.tail));
+    }
+
     public T getHead(){
         return head;
     }

@@ -120,4 +120,29 @@ public class SparseGraph<T> implements Graph<T>{
     public int getNumEdges(){
         return numEdges;
     }
+
+    public static SparseGraph<Integer> random(int numVertices){
+        Random gen = new Random();
+        int t;
+        int h;
+        Edge<Integer> e; Edge<Integer> f;
+        SparseGraph<Integer> randGraph = new SparseGraph<>();
+        ArrayList<Edge<Integer>> edgeList = new ArrayList<>();
+
+        int numEdges = gen.nextInt(numVertices*(numVertices-1)/2) + 1;
+
+        for(int i=0; i < numEdges; i++){
+            do{
+                t = gen.nextInt(numVertices);
+                h = gen.nextInt(numVertices);
+                e = new Edge(t,h);
+                f = new Edge(h,t);
+            }while(edgeList.contains(e) || edgeList.contains(f) || t==h);
+            edgeList.add(e);
+        }
+        
+        randGraph.create(edgeList, false);
+
+        return randGraph;
+    }
 }
