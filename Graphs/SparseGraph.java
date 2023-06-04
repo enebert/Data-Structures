@@ -21,7 +21,7 @@ public class SparseGraph<T> implements Graph<T>{
         return list;
     }
     
-    public void create(ArrayList<Edge<T>> edgeList, boolean directed){
+    public void addAllEdges(ArrayList<Edge<T>> edgeList, boolean directed){
         for(Edge<T> edge : edgeList){
             if(!adjacencyList.contains(edge.getHead())) insertVertex(edge.getHead());
             if(!adjacencyList.containsKey(edge.getTail())) insertVertex(edge.getTail());
@@ -39,7 +39,7 @@ public class SparseGraph<T> implements Graph<T>{
         return true;
     }
     
-    public void insertVertex(ArrayList<T> vList){
+    public void addAllVertices(ArrayList<T> vList){
         for(T v : vList) this.insertVertex(v);
     }
 
@@ -103,7 +103,7 @@ public class SparseGraph<T> implements Graph<T>{
     
     public Graph<T> subgraph(ArrayList<T> vertices){
         SparseGraph<T> sub = new SparseGraph<>();
-        sub.insertVertex(vertices);
+        sub.addAllVertices(vertices);
 
         for(T item : vertices){
             for(T v : adjacencyList.get(item)){
@@ -119,6 +119,18 @@ public class SparseGraph<T> implements Graph<T>{
     
     public int getNumEdges(){
         return numEdges;
+    }
+
+    public int degree(T vertex){
+        return adjacencyList.get(vertex).size();
+    }
+
+    public boolean hasEulerTour(){
+        for(T key : adjacencyList.keySet()){
+            if(degree(key) % 2 == 1)
+            return false;
+        }
+        return true;
     }
 
     public static SparseGraph<Integer> random(int numVertices){
@@ -141,7 +153,7 @@ public class SparseGraph<T> implements Graph<T>{
             edgeList.add(e);
         }
         
-        randGraph.create(edgeList, false);
+        randGraph.addAllEdges(edgeList, false);
 
         return randGraph;
     }
