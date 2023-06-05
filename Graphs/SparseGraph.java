@@ -117,6 +117,14 @@ public class SparseGraph<T> implements Graph<T>{
         return numVertices;
     }
     
+    public Set<T> getVertices(){
+        return adjacencyList.keySet();
+    }
+
+    public LinkedList<T> getAdjacent(T vertex){
+        return adjacencyList.get(vertex);
+    }
+
     public int getNumEdges(){
         return numEdges;
     }
@@ -131,30 +139,5 @@ public class SparseGraph<T> implements Graph<T>{
             return false;
         }
         return true;
-    }
-
-    public static SparseGraph<Integer> random(int maxVertices){
-        Random gen = new Random();
-        int t;
-        int h;
-        Edge<Integer> e; Edge<Integer> f;
-        SparseGraph<Integer> randGraph = new SparseGraph<>();
-        ArrayList<Edge<Integer>> edgeList = new ArrayList<>();
-
-        int numEdges = gen.nextInt(maxVertices*(maxVertices-1)/2) + 1;
-
-        for(int i=0; i < numEdges; i++){
-            do{
-                t = gen.nextInt(maxVertices);
-                h = gen.nextInt(maxVertices);
-                e = new Edge<Integer>(t,h);
-                f = new Edge<Integer>(h,t);
-            }while(edgeList.contains(e) || edgeList.contains(f) || t==h);
-            edgeList.add(e);
-        }
-        
-        randGraph.addAllEdges(edgeList, false);
-
-        return randGraph;
     }
 }

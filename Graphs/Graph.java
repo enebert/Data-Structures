@@ -8,6 +8,8 @@ public interface Graph<T> {
     abstract boolean deleteEdge(Edge<T> e, boolean f);
     
     abstract boolean containsEdge(Edge<T> e);
+    abstract LinkedList<T> getAdjacent(T v);
+    abstract Set<T> getVertices();
     
     abstract Graph subgraph(ArrayList<T> vertices);
 }
