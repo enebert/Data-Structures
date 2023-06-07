@@ -14,5 +14,9 @@ something like this:
 ```java
 public static <T> boolean bfSearch(Graph<T> graph, T key)
 ```
+* 6/6/2023 - Implemented shortest path using bfs in utilities class. Still needs to be tested. Cormen, et.al.
+has the best explanation of how to do this. Worked through the first chapter of Stanley's book *Algebraic
+Combinatorics*. Will add some of those notes to the Notes later. Finding spectral graph theory particularly
+interesting right now.
 
 Many of the vocab notes are from *Algorithms* Cormen, Leiserson, Rivest, Stein.
