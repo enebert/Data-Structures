@@ -19,4 +19,15 @@ has the best explanation of how to do this. Worked through the first chapter of 
 Combinatorics*. Will add some of those notes to the Notes later. Finding spectral graph theory particularly
 interesting right now.
 
+* 6/8/2023 - Worked through examples of Dijkstra's algorithms from Sedgewick and the grokking book. Working through
+the three different implementations was enlightening.
+
+* 6/9/2023 - Changed the abstraction. Graph is now an abstract class instead of an interface. Member variables
+moved to Graph also. Since Graph is abstract, it has no constructor. Methods that work for both SparseGraph and
+WeightedGraph have been moved to Graph. Graph now takes two type variables to account for using adjacent edge
+lists in WeightedGraph.
+
+* 6/9/2023 - Worked out pencil-and-paper examples of topological sort of a DAG. Read through the chapter on
+actions of the symmetric group on a boolean algebra, from Stanley's *Algebraic Combinatorics*.
+
 Many of the vocab notes are from *Algorithms* Cormen, Leiserson, Rivest, Stein.

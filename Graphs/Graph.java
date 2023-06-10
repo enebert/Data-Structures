@@ -1,15 +1,60 @@
 import java.util.*;
 
-public interface Graph<T> {
+public abstract class Graph<T, V> {
+
+    protected Hashtable<T, LinkedList<V>> adjacencyList;
+    protected int numVertices;
+    protected int numEdges;
     
-    abstract boolean insertVertex(T v);
     abstract boolean deleteVertex(T v, boolean f);
     abstract boolean insertEdge(Edge<T> e, boolean f);
     abstract boolean deleteEdge(Edge<T> e, boolean f);
-    
     abstract boolean containsEdge(Edge<T> e);
-    abstract LinkedList<T> getAdjacent(T v);
-    abstract Set<T> getVertices();
-    
     abstract Graph subgraph(ArrayList<T> vertices);
+
+    @Override
+    public String toString(){
+        String list = "";
+        for(T k : adjacencyList.keySet()){
+            list = list + k + ": " + adjacencyList.get(k) + "\n";
+        }
+        return list;
+    }
+
+    public boolean insertVertex(T key){
+        if(this.adjacencyList.containsKey(key)){
+            return false;
+        }
+        this.adjacencyList.put(key, new LinkedList<V>());
+        numVertices++;
+        return true;
+    }
+
+    public void addAllVertices(ArrayList<T> vList){
+        for(T v : vList) this.insertVertex(v);
+    }
+
+    public Set<T> getVertices(){
+        return adjacencyList.keySet();
+    }
+
+    public int getNumEdges(){
+        return numEdges;
+    }
+
+    public int getNumVertices(){
+        return numVertices;
+    }
+
+    public int degree(T vertex){
+        return adjacencyList.get(vertex).size();
+    }
+
+    public boolean hasEulerTour(){
+        for(T key : adjacencyList.keySet()){
+            if(degree(key) % 2 == 1)
+                return false;
+        }
+        return true;
+    }
 }

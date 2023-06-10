@@ -2,19 +2,21 @@ public class Edge<T> {
     private T head;
     private T tail;
     
-    private int weight;
+    private double weight;
 
     public Edge(){
         head = null;
         tail = null;
+        weight = 0.0;
     }
     
     public Edge(T t, T h){
         head = h;
         tail = t;
+        weight = 0.0;
     }
     
-    public Edge(T t, T h, int w){
+    public Edge(T t, T h, double w){
         head = h;
         tail = t;
         weight = w;
@@ -40,5 +42,9 @@ public class Edge<T> {
     
     public T getTail(){
         return tail;
+    }
+
+    public double getWeight(){
+        return weight;
     }
 }

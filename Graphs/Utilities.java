@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.function.*;
 
 public class Utilities {
-    public static <T> boolean dfSearch(Graph<T> graph, T key){
+    public static <T> boolean dfSearch(SparseGraph<T> graph, T key){
         ArrayList<T> searched = new ArrayList<>();
         Stack<T> unsearched = new Stack<>();
         
@@ -22,7 +22,7 @@ public class Utilities {
         return false;
     }
     
-    public static <T> void dfTraverse(Graph<T> graph, Consumer<T> method){
+    public static <T> void dfTraverse(SparseGraph<T> graph, Consumer<T> method){
         ArrayList<T> processed = new ArrayList<>();
         Stack<T> unprocessed = new Stack<>();
 
@@ -40,7 +40,7 @@ public class Utilities {
         }
     }
 
-    public static <T> boolean bfSearch(Graph<T> graph, T key){
+    public static <T> boolean bfSearch(SparseGraph<T> graph, T key){
         ArrayList<T> searched = new ArrayList<>();
         Deque<T> unsearched = new LinkedList<>();
 
@@ -61,7 +61,7 @@ public class Utilities {
         return false;
     }
 
-    public static <T> void bfTraverse(Graph<T> graph, Consumer<T> method){
+    public static <T> void bfTraverse(SparseGraph<T> graph, Consumer<T> method){
         ArrayList<T> processed = new ArrayList<>();
         Deque<T> unprocessed = new LinkedList<>();
 
@@ -80,7 +80,7 @@ public class Utilities {
         }
     }
 
-    public static <T> Path<T> shortestPath(Graph<T> graph, T start, T end){
+    public static <T> Path<T> shortestPath(SparseGraph<T> graph, T start, T end){
         ArrayList<T> searched = new ArrayList<>();
         Deque<T> unsearched = new LinkedList<>();
         HashMap<T, T> predecessors = new HashMap<>();
@@ -135,5 +135,17 @@ public class Utilities {
         randGraph.addAllEdges(edgeList, false);
 
         return randGraph;
+    }
+
+    public static <T> WeightedGraph<T> buildSPT(Graph<T> G, T start, T end){
+        PriorityQueue<T> list = new PriorityQueue<>();
+        SparseGraph<T> nodeTree = new SparseGraph<>();
+        Hashtable<T, Integer> costToVertex = new Hashtable<>();
+
+
+    }
+
+    public static <T> Path<T> dijkstra(Graph<T> G, T start, T end){
+
     }
 }

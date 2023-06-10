@@ -1,24 +1,12 @@
 import java.util.*;
 
-public class SparseGraph<T> implements Graph<T>{
-    
-    private Hashtable<T, LinkedList<T>> adjacencyList;
-    private int numVertices;
-    private int numEdges;
+public class SparseGraph<T> extends Graph<T,T>{
     
     public SparseGraph(){
         numVertices = 0;
         numEdges = 0;
         
         adjacencyList = new Hashtable<>();
-    }
-    
-    public String toString(){
-        String list = "";
-        for(T k : adjacencyList.keySet()){
-            list = list + k + ": " + adjacencyList.get(k) + "\n";
-        }
-        return list;
     }
     
     public void addAllEdges(ArrayList<Edge<T>> edgeList, boolean directed){
@@ -28,19 +16,6 @@ public class SparseGraph<T> implements Graph<T>{
 
             insertEdge(edge, directed);
         }
-    }
-
-    public boolean insertVertex(T key){
-        if(adjacencyList.containsKey(key)){
-            return false;
-        }
-        adjacencyList.put(key, new LinkedList<T>());
-        this.numVertices++;
-        return true;
-    }
-    
-    public void addAllVertices(ArrayList<T> vList){
-        for(T v : vList) this.insertVertex(v);
     }
 
     public boolean deleteVertex(T key, boolean directed){
@@ -77,11 +52,6 @@ public class SparseGraph<T> implements Graph<T>{
         }
         return false;
     }
-    
-    public boolean insertEdge(ArrayList<Edge<T>> edgeList, boolean directed){
-        for(Edge<T> e : edgeList) if(!insertEdge(e, directed)) return false;
-        return true;
-    }
 
     public boolean deleteEdge(Edge<T> e, boolean directed){
         if(adjacencyList.containsKey(e.getHead()) && adjacencyList.containsKey(e.getTail())){
@@ -101,7 +71,7 @@ public class SparseGraph<T> implements Graph<T>{
         return adjacencyList.get(e.getTail()).contains(e.getHead());
     }
     
-    public Graph<T> subgraph(ArrayList<T> vertices){
+    public Graph<T,T> subgraph(ArrayList<T> vertices){
         SparseGraph<T> sub = new SparseGraph<>();
         sub.addAllVertices(vertices);
 
@@ -112,32 +82,8 @@ public class SparseGraph<T> implements Graph<T>{
         }
         return sub;
     }
-    
-    public int getNumVertices(){
-        return numVertices;
-    }
-    
-    public Set<T> getVertices(){
-        return adjacencyList.keySet();
-    }
 
     public LinkedList<T> getAdjacent(T vertex){
         return adjacencyList.get(vertex);
-    }
-
-    public int getNumEdges(){
-        return numEdges;
-    }
-
-    public int degree(T vertex){
-        return adjacencyList.get(vertex).size();
-    }
-
-    public boolean hasEulerTour(){
-        for(T key : adjacencyList.keySet()){
-            if(degree(key) % 2 == 1)
-            return false;
-        }
-        return true;
     }
 }
