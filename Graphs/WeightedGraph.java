@@ -49,6 +49,10 @@ public class WeightedGraph<T> extends Graph<T,Edge<T>>{
         return v;
     }
     
+    public LinkedList<Edge<T>> getAdjEdges(T vertex){
+        return adjacencyList.get(vertex);
+    }
+
     public void addAllEdges(ArrayList<Edge<T>> edgeList, boolean directed){
         for(Edge<T> edge : edgeList){
             if(!adjacencyList.contains(edge.getHead())) insertVertex(edge.getHead());

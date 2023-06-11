@@ -137,15 +137,121 @@ public class Utilities {
         return randGraph;
     }
 
-    public static <T> WeightedGraph<T> buildSPT(Graph<T> G, T start, T end){
+    public static <T> SparseGraph<T> buildSPT(WeightedGraph<T> graph, T start, T end){
         PriorityQueue<T> list = new PriorityQueue<>();
         SparseGraph<T> nodeTree = new SparseGraph<>();
         Hashtable<T, Integer> costToVertex = new Hashtable<>();
 
-
+        return nodeTree;
     }
 
-    public static <T> Path<T> dijkstra(Graph<T> G, T start, T end){
+    public static <T> Path<T> dijkstra(WeightedGraph<T> graph, T start, T end){
+        Path<T> path = new Path<>();
+        Hashtable<T,T> predecessors = new Hashtable<>();
+        Hashtable<T, Double> costs = new Hashtable<>();
+        ArrayList<T> processed = new ArrayList<>();
 
+        Set<T> v = graph.getVertices();
+        for(T item : v){
+            costs.put(item, Double.MAX_VALUE);
+        }
+        for(Edge<T> e : graph.getAdjEdges(start)){
+            costs.put(e.getHead(), e.getWeight());
+            predecessors.put(e.getHead(), start);
+        }
+        processed.add(start);
+
+        T node = getLeastVertex(graph, start);
+
+        while(!processed.contains(node)){
+            double cost = costs.get(node);
+                for(Edge<T> e : graph.getAdjEdges(node)){
+                    double newCost = cost + e.getWeight();
+                    if(costs.get(e.getHead()) > newCost){
+                        costs.put(e.getHead(), newCost);
+                        predecessors.put(e.getHead(), node);
+                    }
+                }
+            processed.add(node);
+            if(node.equals(end)) break;
+            node = getLeastCost(costs, processed);
+        }
+
+        T current = end;
+
+        while(!current.equals(start)){
+            path.add(new Edge<T> (current, predecessors.get(current)));
+            current = predecessors.get(current); 
+        }
+        return path;
+    }
+
+    private static <T> T getLeastCost(Hashtable<T, Double> c, ArrayList<T> p){
+        Double leastCost = Double.MAX_VALUE;
+        T current = null;
+
+        for(T node : c.keySet()){
+            Double cost = c.get(node);
+            if(cost < leastCost && !p.contains(node)){
+                leastCost = cost;
+                current = node;
+            }
+        }
+        return current;
+    }
+
+    private static <T> T getLeastVertex(WeightedGraph<T> graph, T start){
+        Pair<T> current = new Pair<>(start, Double.MAX_VALUE);
+        LinkedList<Edge<T>> edges = graph.getAdjEdges(start);
+
+        for(Edge<T> e : edges){
+           if(e.getWeight() < current.getCost()){
+                current = new Pair<T>(e.getHead(), e.getWeight());
+            }
+        }
+        return current.getVertex();
+    }
+
+    private static class Pair<T>{
+        private T vertex;
+        private double cost;
+
+        public Pair(){
+            vertex = null;
+            cost = 0.0;
+        }
+
+        public Pair(T v, double c){
+            vertex = v;
+            cost = c;
+        }
+
+        public String toString(){
+            return "( vertex: " + vertex + ", cost: " + cost + ")";
+        }
+
+        public boolean equals(Object o){
+            if(o == this) return true;
+            if(!(o instanceof Pair)) return false;
+
+            Pair p = (Pair) o;
+            return (vertex.equals(p.vertex)) && (Double.compare(cost, p.cost)==0);
+        }
+
+        public int compareTo(Object o){
+            Pair p = (Pair) o;
+
+            if(this.equals(0)) return 0;
+
+            return Double.compare(this.cost, p.cost);
+        }
+
+        public double getCost(){
+            return cost;
+        }
+
+        public T getVertex(){
+            return vertex;
+        }
     }
 }

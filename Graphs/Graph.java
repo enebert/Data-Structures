@@ -1,16 +1,12 @@
 import java.util.*;
 
-public abstract class Graph<T, V> {
+public abstract class Graph<T, V> implements AbstractGraph<T>{
 
     protected Hashtable<T, LinkedList<V>> adjacencyList;
     protected int numVertices;
     protected int numEdges;
     
-    abstract boolean deleteVertex(T v, boolean f);
-    abstract boolean insertEdge(Edge<T> e, boolean f);
-    abstract boolean deleteEdge(Edge<T> e, boolean f);
     abstract boolean containsEdge(Edge<T> e);
-    abstract Graph subgraph(ArrayList<T> vertices);
 
     @Override
     public String toString(){

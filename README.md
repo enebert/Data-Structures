@@ -30,4 +30,15 @@ lists in WeightedGraph.
 * 6/9/2023 - Worked out pencil-and-paper examples of topological sort of a DAG. Read through the chapter on
 actions of the symmetric group on a boolean algebra, from Stanley's *Algebraic Combinatorics*.
 
+* 6/10/2023 - Created the abstract graph interface.
+
+* 6/11/2023 - Created an inner class Pair in utilities to pair a vertex with a weight or cost.
+
+```java
+private static class Pair<T>
+```
+The private keyword is used to keep access restricted to the class it is defined in. The keyword static allows
+use without an instance of Utilities. Static classes can't implement an interfaces. Implemented Dijkstra's
+algorithm as presented in *grokking algorithms*. A very inefficient coding day.
+
 Many of the vocab notes are from *Algorithms* Cormen, Leiserson, Rivest, Stein.
