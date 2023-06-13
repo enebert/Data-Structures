@@ -151,6 +151,20 @@ public class Utilities {
         Hashtable<T, Double> costs = new Hashtable<>();
         ArrayList<T> processed = new ArrayList<>();
 
+        Supplier<T> getLeastCost = () ->{
+            Double leastCost = Double.MAX_VALUE;
+            T currentVertex = null;
+
+            for(T n : costs.keySet()){
+                Double cost = costs.get(n);
+                if(cost < leastCost && !processed.contains(n)){
+                    leastCost = cost;
+                    currentVertex = n;
+                }
+            }
+            return currentVertex;
+        };
+
         Set<T> v = graph.getVertices();
         for(T item : v){
             costs.put(item, Double.MAX_VALUE);
@@ -174,7 +188,7 @@ public class Utilities {
                 }
             processed.add(node);
             if(node.equals(end)) break;
-            node = getLeastCost(costs, processed);
+            node = getLeastCost.get();
         }
 
         T current = end;
@@ -186,20 +200,6 @@ public class Utilities {
         return path;
     }
 
-    private static <T> T getLeastCost(Hashtable<T, Double> c, ArrayList<T> p){
-        Double leastCost = Double.MAX_VALUE;
-        T current = null;
-
-        for(T node : c.keySet()){
-            Double cost = c.get(node);
-            if(cost < leastCost && !p.contains(node)){
-                leastCost = cost;
-                current = node;
-            }
-        }
-        return current;
-    }
-
     private static <T> T getLeastVertex(WeightedGraph<T> graph, T start){
         Pair<T> current = new Pair<>(start, Double.MAX_VALUE);
         LinkedList<Edge<T>> edges = graph.getAdjEdges(start);
@@ -209,25 +209,25 @@ public class Utilities {
                 current = new Pair<T>(e.getHead(), e.getWeight());
             }
         }
-        return current.getVertex();
+        return current.getComponent();
     }
 
     private static class Pair<T>{
-        private T vertex;
+        private T component;
         private double cost;
 
         public Pair(){
-            vertex = null;
+            component = null;
             cost = 0.0;
         }
 
         public Pair(T v, double c){
-            vertex = v;
+            component = v;
             cost = c;
         }
 
         public String toString(){
-            return "( vertex: " + vertex + ", cost: " + cost + ")";
+            return "(Component: " + component + ", cost: " + cost + ")";
         }
 
         public boolean equals(Object o){
@@ -235,7 +235,15 @@ public class Utilities {
             if(!(o instanceof Pair)) return false;
 
             Pair p = (Pair) o;
-            return (vertex.equals(p.vertex)) && (Double.compare(cost, p.cost)==0);
+            return (component.equals(p.component)) && (Double.compare(cost, p.cost)==0);
+        }
+
+        public int hashCode(){
+            final int prime = 22859;
+            int result = 7691;
+            result = prime*result + ((component==null) ? 0 : component.hashCode());
+
+            return result;
         }
 
         public int compareTo(Object o){
@@ -250,8 +258,8 @@ public class Utilities {
             return cost;
         }
 
-        public T getVertex(){
-            return vertex;
+        public T getComponent(){
+            return component;
         }
     }
 }

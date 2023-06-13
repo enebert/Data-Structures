@@ -41,4 +41,49 @@ The private keyword is used to keep access restricted to the class it is defined
 use without an instance of Utilities. Static classes can't implement an interfaces. Implemented Dijkstra's
 algorithm as presented in *grokking algorithms*. A very inefficient coding day.
 
+* 6/12/2023 - I was unaware that overriding equals also requires overriding ```java hashCode()```. Changed member
+variable name in pair to reflect a more abstract use. Playing with lambda expressions and anonymous functions.
+Here's and example with no return value:
+
+```java
+interface Test<T>{
+    void doThis(T c, T p);
+}
+
+public static Test thisTest = (c,p) -> {System.out.println(p); System.out.println(c);};
+```
+
+and invoking it: ```java thisTest.doThis( "aa",  "bb");``` or ```java thisTest.doThis(2, 3);```
+
+Using ```java Function``` or ```java BiFunction``` from the ```java.util.function``` are also very useful.
+
+Here's another example:
+
+```java
+public static <T> T myTest(T v, T w, BiFunction<T, T, T> method){
+    return method.apply(v, w);
+}
+
+static BiFunction<Integer, Integer, Integer> test = (c,d) -> {return c+d;};
+```
+
+which was invoked with ```java myTest(2,3,test);```
+
+In the implementation of Dijkstra's algorithm, I never really liked having another static method that
+produced the least cost vertex. It is such a specific helper to this method and this implementation it would
+never be used for any other purpose. I created a ```Supplier``` inside of the method to make this into a
+lambda expression. Lambda expressions can "capture" local variables. Using the lambda expression inside the
+```dijkstra``` method also saves us from needlessly passing the ```costs``` hashtable and the ```processed```
+list.
+
+It may seem strange to "define" a function inside of a method. However, assigning a lambda expression to a
+variable does two things:
+
+1. We get to treat code as if it were data. This is a large part of what lambda expressions are meant to do.
+2. We are binding a name to a piece of data just like any other variable declaration. It just happens that in
+this case our data is a block of code.
+
+* 6/13/2023 - Considering taking the static methods in Utilities and placing them back into the classes that
+they are associated with. 
+
 Many of the vocab notes are from *Algorithms* Cormen, Leiserson, Rivest, Stein.

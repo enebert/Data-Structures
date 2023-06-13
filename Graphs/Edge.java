@@ -36,6 +36,14 @@ public class Edge<T> {
         return (e.getHead().equals(this.head) && e.getTail().equals(this.tail));
     }
 
+    public int hashCode(){
+        final int prime = 27644437;
+        int result = 5387;
+        result = prime*result + ((head==null || tail==null) ? 0 : tail.hashCode() + head.hashCode());
+
+        return result;
+    }
+
     public T getHead(){
         return head;
     }

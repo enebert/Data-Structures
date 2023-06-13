@@ -1,17 +1,18 @@
 import java.util.*;
+import java.util.function.BiFunction;
 
 public class WeightedGraph<T> extends Graph<T,Edge<T>>{
-    
+
     public WeightedGraph(){
         adjacencyList = new Hashtable<>();
         numVertices = 0;
         numEdges = 0;
 
     }
-    
-   public boolean deleteVertex(T vertex, boolean directed){
+
+    public boolean deleteVertex(T vertex, boolean directed){
         if(!adjacencyList.containsKey(vertex)) return false;
-        
+
         if(directed){
             adjacencyList.remove(vertex);
             Set<T> temp = adjacencyList.keySet();
@@ -34,7 +35,7 @@ public class WeightedGraph<T> extends Graph<T,Edge<T>>{
         numVertices--;
         return true;
     }
-    
+
     public LinkedList<T> getAdjacent(T vertex){
         LinkedList<Edge<T>> temp = adjacencyList.get(vertex);
         LinkedList<T> v = new LinkedList<>();
@@ -48,7 +49,7 @@ public class WeightedGraph<T> extends Graph<T,Edge<T>>{
         }
         return v;
     }
-    
+
     public LinkedList<Edge<T>> getAdjEdges(T vertex){
         return adjacencyList.get(vertex);
     }
@@ -61,22 +62,22 @@ public class WeightedGraph<T> extends Graph<T,Edge<T>>{
             insertEdge(edge, directed);
         }
     }
-    
+
     public boolean insertEdge(Edge<T> e, boolean directed){
-        
-       if(adjacencyList.containsKey(e.getHead()) && adjacencyList.containsKey(e.getTail())){
-           if(directed){
-               adjacencyList.get(e.getTail()).add(e);
-           }else{
-               adjacencyList.get(e.getTail()).add(e);
-               adjacencyList.get(e.getHead()).add(e);
-           }
-           numEdges++;
-           return true;
-       }
+
+        if(adjacencyList.containsKey(e.getHead()) && adjacencyList.containsKey(e.getTail())){
+            if(directed){
+                adjacencyList.get(e.getTail()).add(e);
+            }else{
+                adjacencyList.get(e.getTail()).add(e);
+                adjacencyList.get(e.getHead()).add(e);
+            }
+            numEdges++;
+            return true;
+        }
         return false;
     }
-    
+
     public boolean deleteEdge(Edge<T> e, boolean directed){
         if(!(adjacencyList.size()==0) || adjacencyList.containsKey(e.getHead()) && adjacencyList.containsKey(e.getTail())){
             if(directed){
@@ -85,7 +86,7 @@ public class WeightedGraph<T> extends Graph<T,Edge<T>>{
                 Edge<T> t = new Edge<T> (e.getHead(), e.getTail());
                 adjacencyList.get(e.getTail()).remove(e);
                 adjacencyList.get(e.getHead()).remove(e);
-                
+
                 adjacencyList.get(e.getTail()).remove(t);
                 adjacencyList.get(e.getHead()).remove(t);
             }
@@ -94,13 +95,13 @@ public class WeightedGraph<T> extends Graph<T,Edge<T>>{
         }
         return false;
     }
-    
+
     public boolean containsEdge(Edge<T> e){
         if(adjacencyList.size()==0 || !adjacencyList.containsKey(e.getTail())) return false;
         return adjacencyList.get(e.getTail()).contains(e);
     }
-    
-     public WeightedGraph<T> subgraph(ArrayList<T> vertices){
+
+    public WeightedGraph<T> subgraph(ArrayList<T> vertices){
         WeightedGraph<T> sub = new WeightedGraph<>();
         sub.addAllVertices(vertices);
 
@@ -109,6 +110,6 @@ public class WeightedGraph<T> extends Graph<T,Edge<T>>{
                 if(e.getTail().equals(item) || e.getHead().equals(item)) sub.insertEdge(e, true);
             }
         }
-         return sub;
+        return sub;
     }
 }
