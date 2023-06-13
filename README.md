@@ -53,9 +53,9 @@ interface Test<T>{
 public static Test thisTest = (c,p) -> {System.out.println(p); System.out.println(c);};
 ```
 
-and invoking it: ```java thisTest.doThis( "aa",  "bb");``` or ```java thisTest.doThis(2, 3);```
+and invoking it: ```thisTest.doThis( "aa",  "bb");``` or ```thisTest.doThis(2, 3);```
 
-Using ```java Function``` or ```java BiFunction``` from the ```java.util.function``` are also very useful.
+Using ```Function``` or ```BiFunction``` from the ```java.util.function``` package are also very useful.
 
 Here's another example:
 
@@ -67,10 +67,10 @@ public static <T> T myTest(T v, T w, BiFunction<T, T, T> method){
 static BiFunction<Integer, Integer, Integer> test = (c,d) -> {return c+d;};
 ```
 
-which was invoked with ```java myTest(2,3,test);```
+which was invoked with ```myTest(2,3,test);```
 
 In the implementation of Dijkstra's algorithm, I never really liked having another static method that
-produced the least cost vertex. It is such a specific helper to this method and this implementation it would
+produced the least cost vertex. It is such a specific helper to this method (and this implementation) it would
 never be used for any other purpose. I created a ```Supplier``` inside of the method to make this into a
 lambda expression. Lambda expressions can "capture" local variables. Using the lambda expression inside the
 ```dijkstra``` method also saves us from needlessly passing the ```costs``` hashtable and the ```processed```
