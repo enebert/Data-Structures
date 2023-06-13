@@ -33,3 +33,7 @@ hs_err_pid*
 *.aux
 *.synctex.*
 *.txt
+
+# Test Files
+Test.*
+Utilities.*

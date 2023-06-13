@@ -1,5 +1,5 @@
 import java.util.*;
-import java.util.function.BiFunction;
+import java.util.function.*;
 
 public class WeightedGraph<T> extends Graph<T,Edge<T>>{
 
@@ -111,5 +111,72 @@ public class WeightedGraph<T> extends Graph<T,Edge<T>>{
             }
         }
         return sub;
+    }
+
+    public static <T> Path<T> dijkstra(WeightedGraph<T> graph, T start, T end){
+        Path<T> path = new Path<>();
+        Hashtable<T,T> predecessors = new Hashtable<>();
+        Hashtable<T, Double> costs = new Hashtable<>();
+        ArrayList<T> processed = new ArrayList<>();
+
+        Supplier<T> getLeastCost = () ->{
+            Double leastCost = Double.MAX_VALUE;
+            T currentVertex = null;
+
+            for(T n : costs.keySet()){
+                Double cost = costs.get(n);
+                if(cost < leastCost && !processed.contains(n)){
+                    leastCost = cost;
+                    currentVertex = n;
+                }
+            }
+            return currentVertex;
+        };
+
+        Set<T> v = graph.getVertices();
+        for(T item : v){
+            costs.put(item, Double.MAX_VALUE);
+        }
+        for(Edge<T> e : graph.getAdjEdges(start)){
+            costs.put(e.getHead(), e.getWeight());
+            predecessors.put(e.getHead(), start);
+        }
+        processed.add(start);
+
+        T node = getLeastVertex(graph, start);
+
+        while(!processed.contains(node)){
+            double cost = costs.get(node);
+            for(Edge<T> e : graph.getAdjEdges(node)){
+                double newCost = cost + e.getWeight();
+                if(costs.get(e.getHead()) > newCost){
+                    costs.put(e.getHead(), newCost);
+                    predecessors.put(e.getHead(), node);
+                }
+            }
+            processed.add(node);
+            if(node.equals(end)) break;
+            node = getLeastCost.get();
+        }
+
+        T current = end;
+
+        while(!current.equals(start)){
+            path.add(new Edge<T> (current, predecessors.get(current)));
+            current = predecessors.get(current);
+        }
+        return path;
+    }
+
+    private static <T> T getLeastVertex(WeightedGraph<T> graph, T start){
+        Graph.Pair<T> current = new Pair<>(start, Double.MAX_VALUE);
+        LinkedList<Edge<T>> edges = graph.getAdjEdges(start);
+
+        for(Edge<T> e : edges){
+            if(e.getWeight() < current.getCost()){
+                current = new Pair<T>(e.getHead(), e.getWeight());
+            }
+        }
+        return current.getComponent();
     }
 }

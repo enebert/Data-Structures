@@ -84,6 +84,8 @@ variable does two things:
 this case our data is a block of code.
 
 * 6/13/2023 - Considering taking the static methods in Utilities and placing them back into the classes that
-they are associated with. 
+they are associated with. The Utilities class is now gone. The static methods have been moved to their
+appropriate class. The ```Pair``` class has been moved to the Graph class and marked protected. This has
+resulted in better organization and better resuability of the methods.
 
 Many of the vocab notes are from *Algorithms* Cormen, Leiserson, Rivest, Stein.
