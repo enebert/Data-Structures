@@ -88,4 +88,15 @@ they are associated with. The Utilities class is now gone. The static methods ha
 appropriate class. The ```Pair``` class has been moved to the Graph class and marked protected. This has
 resulted in better organization and better resuability of the methods.
 
+* 6/16/2023 - Read the chapter in Stanley's *Algebraic Combinatorics* on the signed Laplacian and the Matrix-Tree
+theorem. His sketch of the Cauchy-Binet theorem is somewhat vague (even for a sketch) but a good reminder of the
+result. He uses this to prove the major theorem in the chapter which states that the number of spanning trees is
+given by the determinant of a modified signed Laplacian.
+
+* 6/17/2023 - Worked through examples of Kruskal's algorithm and Prim's algorithm for obtaining a MST. I used
+Cormen, et. al. as the source for this. These are both greedy algorithms that are proven to be correct via an
+application of the Cut Property. I have many hand-written notes that need to be added to the LA Notes.
+
+**Remark:** I have probably accomplished what I'm going to accomplish before leaving for my summer job. 
+
 Many of the vocab notes are from *Algorithms* Cormen, Leiserson, Rivest, Stein.
