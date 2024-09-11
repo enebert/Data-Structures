@@ -139,9 +139,10 @@ Let $G = (V,E)$ be a graph where $V$ is the set of vertices and $E$ is the set o
 \]
 we conclude that the set of $\{\{v_i\} \mid v_i \in V\}$ is a basis for the vertex space and that it is finite-dimensional with dimension \#$V$. Everything done here for the vertex space can be done analagously for the edge space.
 
+
 \section{Matrices}
 
-We will be using the following graph in our discussion:
+We will be using the graph in Figure 1 for our discussion:
 
 \vspace*{.15in}
 
@@ -185,7 +186,7 @@ Notice that this will yield a linear map $B: \mathcal{V}(E) \rightarrow \mathcal
 \begin{ex}
 The vector $(0,1,0)^T$ corresponds to $e_2$ and 
 \[
-	Be_1 = \begin{pmatrix}
+	Be_2 = \begin{pmatrix}
 		1 & 0 & 0 \\
 		0 & 1 & 0 \\
 		1 & 0 & 1 \\
@@ -198,7 +199,7 @@ The vector $(0,1,0)^T$ corresponds to $e_2$ and
 		0 \\ 1 \\ 0 \\ 1 \\
 	\end{pmatrix}
 \]
-The image vector corresponds to the 2nd and 4th vertices, which are the vertices incident to $e_2$. We now understand the action of $B$ on any basis element of the edge space: we get the vertices that for then end points of the edge.
+The image vector corresponds to the 2nd and 4th vertices, which are the vertices incident to $e_2$. We now understand the action of $B$ on any basis element of the edge space: we get the vertices that are the end points of the edge.
 \end{ex}
 
 \begin{ex}
@@ -246,7 +247,7 @@ Remember we are doing the multiplication mod 2. We are unsurprised that vertex $
 	In our example, $B$ has full rank and therefore the map associated to $B$ has trivial kernel. 
 \end{rem}
 
-Let's modify our graph by adding an edge $e_4 = (1,4)$.
+Let's modify our graph by adding an edge $e_4 = (1,4)$ as in Figure 2.
 
 \begin{figure}
 \centering
@@ -317,7 +318,7 @@ We now have the following incidence matrix:
 \end{prop}
 
 \subsection{The dual $B^T$}
-Given a matrix and its associated taking the transpose gives us the dual map. We ask: what role does it play? We begin by noting that $B^T$ will define a linear map $\mathcal{V}(V) \rightarrow \mathcal{V}(E)$.
+Given a matrix, taking the transpose gives us the dual map. We ask: what role does it play? We begin by noting that $B^T$ will define a linear map $\mathcal{V}(V) \rightarrow \mathcal{V}(E)$.
 
 \begin{ex}
 	Let's consider the vertex $\{1\}$ and compute $B^Tv_1$:
@@ -328,7 +329,7 @@ Given a matrix and its associated taking the transpose gives us the dual map. We
 			0 & 0 & 1 & 1 \\
 		\end{pmatrix}
 		\begin{pmatrix}
-			1 & 0 & 0 & 0 \\
+			1 \\ 0  \\  0  \\ 0 \\
 		\end{pmatrix} = 
 		\begin{pmatrix}
 			1 \\ 0 \\ 0 
@@ -346,7 +347,7 @@ Given a matrix and its associated taking the transpose gives us the dual map. We
 			0 & 0 & 1 & 1 \\
 		\end{pmatrix}
 		\begin{pmatrix}
-			0 & 0 & 0 & 1 \\
+			0 \\ 0 \\ 0 \\ 1 \\
 		\end{pmatrix} = 
 		\begin{pmatrix}
 			0 \\ 1 \\ 1 
@@ -364,7 +365,7 @@ Given a matrix and its associated taking the transpose gives us the dual map. We
 			0 & 0 & 1 & 1 \\
 		\end{pmatrix}
 		\begin{pmatrix}
-			0 & 0 & 1 & 1 \\
+			0 \\ 0 \\ 1 \\ 1 \\
 		\end{pmatrix} = 
 		\begin{pmatrix}
 			1 \\ 1 \\ 0 
@@ -476,7 +477,7 @@ The vertex $v_2$ gets left out because it is not a neighbor to any of the vertic
 
 \section{Subspaces}
 
-We are going to take a look at two subspaces of the edge space.  We will be using the following graph for our discussion.
+We are going to take a look at two subspaces of the edge space.  We will be using the graph in figure 3. for our discussion.
 
 \begin{figure}[h]
 	\centering
@@ -497,11 +498,9 @@ We are going to take a look at two subspaces of the edge space.  We will be usin
 	\caption{Graph with multiple cycles}
 \end{figure} 
 
-\vfill
+\newpage
 
 A set $F$ of edges is said to be a \textit{cut} in $G$ if there exists a partition $\{V_1, V_2\}$ of $V$ such that  $F=E(V_1, V_2)$. The edges in $F$ are said to \textit{cross} this partition. The sets $V_1 \text{ and } V_2$ are the \textit{sides} of the cut. A minimal non-empty cut in $G$ is a \textit{bond}.
-
-\newpage
 
 \begin{tabular}{c | c | c}
 \begin{minipage}[t]{2in}
