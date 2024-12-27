@@ -29,10 +29,18 @@ hs_err_pid*
 # Fleet Files
 .fleet/
 
+# IntelliJ Files
+.idea/
+*.iml
+
 # Latex Files
 *.aux
 *.synctex.*
 *.txt
+
+# Haskell Files
+*.hi
+*.o
 
 # Test Files
 Test.*
