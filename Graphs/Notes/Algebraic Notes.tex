@@ -1,0 +1,395 @@
+\documentclass[10pt, letterpaper]{article}
+%Graphic and Diagram Setup
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[all]{xy}
+
+\usepackage{pdflscape}
+\usepackage{rotating}
+
+%Inserting Graphics
+%An example of the use of this command is
+% \begin{minipage}{4in}
+%   \Fig{filename}
+% \end{minipage}
+\newcommand{\Fig}[1]{\includegraphics[width=0.5\textwidth]{#1}}
+
+%Math Symbol Setup
+\usepackage{ulem}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+%Math Fonts
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+
+%Absolute Value and Norm Notation
+\newcommand{\abs}[1]{\left \lvert #1 \right \rvert}
+\newcommand{\norm}[1]{\left \lVert #1 \right \rVert}
+
+%Kernel of a map
+\renewcommand{\ker}{\operatorname{Ker}}
+
+%Lie Algebra of a Lie Group
+\newcommand{\lie}[1]{\operatorname{Lie}(#1)}
+
+%Fields and Blackboard Letters
+\newcommand{\field}[1]{\mathbb{#1}}
+\newcommand{\A}{\mathbb{A}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+%Theorems and Definitions
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{prop}{Proposition}
+
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem{ex}{Example}
+
+%Fancy Header Setup
+\usepackage{fancyhdr}
+\fancyhf{}
+\pagestyle{fancy}
+\lhead{}
+\chead{\bfseries Graph Theory \& Linear Algebra}
+\rhead{}
+\lfoot{Graph Theory \& Algorithms}
+\cfoot{Eric Ebert}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.1pt}
+
+%Double Space
+\usepackage{setspace}
+\linespread{1.6}
+
+%Document Content
+\begin{document}
+    \section{Cauchy-Binet Theorem}
+
+    Here is our setup:
+        \begin{itemize}
+            \item $A$ is an $m \times n$ matirx and $B$ is an $n \times m$ matrix.
+            \item We let $S$ be an $m$ element subset of $\{1,2, \ldots, n\}$. We define
+            $A[S]$ to be the $m \times m$ submatrix of $A$ formed by the $m$ columns of $A$ enumerated by $S$.
+            \item The analogous definition for $B[S]$ is the $m \times m$ submatrix formed by the $m$ rows of $B$
+            indexed by $S$.
+        \end{itemize}
+
+    \textbf{Goal: } Compute $\det (AB)$.
+
+    \begin{thm}[Cauchy - Binet]
+        Let $A=(a_{ij})$ be an $m \times n$ matrix and $B=(b_{ij})$ be an $n \times m$ matrix. Then
+        \begin{enumerate}
+            \item If $m > n$, then $\det(AB) = 0$.
+            \item If $m \geq n$, then
+            \[
+                \det (AB) = \sum_{S} \left( \det A[S] \cdot \det B[S] \right)
+            \]
+            where $S$ ranges over every $m$-element subset of $\{1,2, \ldots, n\}$.
+        \end{enumerate}
+    \end{thm}
+
+    \begin{proof}(Sketch)
+        Suppose $m > n$. As a consequence of the definition of rank, we know that
+        \[
+            \operatorname{rk} AB \leq \operatorname{rk} A \leq n < m.
+        \]
+        Since $AB$ is an $m \times m$ matrix, and has rank strictly less than $m$ we conclude that the rows / columns
+        of $AB$ cannot be linearly independent. One concludes that $\det AB = 0$ as claimed.
+
+        We now assume that $m \leq n$. We denoted by $M_{rs}$ to be a matrix of size $r \times s$. We make some remarks
+        regarding block multiplication of matrices below:
+
+        \begin{enumerate}
+            \item
+            \[
+                \begin{pmatrix}
+                    R_{mm} & S_{mn} \\
+                    T_{nm} & U_{nn} \\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    V_{mn} & W_{mm} \\
+                    X_{nm} & Y_{nm} \\
+                \end{pmatrix} =
+                \begin{pmatrix}
+                    RV+SX & RW + SY \\
+                    TV+UX & TW + UY \\
+                \end{pmatrix}
+            \]
+            \item Letting $S = A$, $T = 0_{nm}$, $U = I_n$, $V = A$, $W = 0_{mn}$, $X = I_n$ and $Y = B$ one can easily
+            verify that
+            \[
+                \begin{pmatrix}
+                    I_m & A \\
+                    0_{nm} & I_n \\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    A & 0_{mn} \\
+                    -I_n & B \\
+                \end{pmatrix} =
+                \begin{pmatrix}
+                    0_{mn} & AB \\
+                    -I_n & B \\
+                \end{pmatrix}
+            \]
+
+            \item Taking determinants, we note that
+            \[
+                \begin{vmatrix}
+                    A & 0_{mn} \\
+                    -I_n & B \\
+                \end{vmatrix} =
+                \begin{vmatrix}
+                    0_{mn} & AB \\
+                    -I_n & B \\
+                \end{vmatrix}
+            \]
+            The determinant on the RHS is $\pm \det AB$ the sign being determined by $n$ being even or odd.
+        \end{enumerate}
+
+        We now consider the definition of the determinant taken over the sum of the symmetric group given below:
+        \[
+            \det(M) = \sum_{\sigma \in S_n} \operatorname{sgn}(\sigma) \, m_{1\sigma(1)} m_{2\sigma(2)} \cdots m_{n\sigma(n)}
+        \]
+        where the $m_{ij}$ are the entries of $M$.
+
+        Now consider the determinant on the LHS above. Any nonzero summand in the determinant is a product of nonzero entries
+        each of which lies in one column and one row. In choosing these entries, we must avoid the zeros in the upper RH side.
+        Hence the entries chosen in the last $m$ columns must come from B and we take entries from A both of which are indexed
+        by $S$. For the remaining entries, we must select the minus ones in the lower left hand block. There are $n-m$ of
+        these rows with -1.
+
+        \textbf{Q: } What is the contribution of the expansion from the terms which use exactly the -1s from the rows
+        $m+i$ and columns $i$ for $i \notin S$?
+
+        We form the matrix $M_S$ by taking the block matrix with $A$ in the upper left and $B$ in the lower right. We then
+        proceed to delete the row $m+i$ and column $i$.  This yields a block diagonal matrix where $A[S]$ is in one block
+        and $B[S]$ in the second block. Further,
+        \[
+            \det(M_S)=\det(A[S])\det(B[S]).
+        \]
+        We get the claimed formula by summing over all subsets of $S$.
+    \end{proof}
+
+    \section{Eigenvalues \& Eigenvectors}
+
+    We begin by reviewing some results regarding the eigenvalues and eigenvectors of a linear transformation.
+    Let $T$ be a linear transformation $V \rightarrow V$. We say that $\lambda \in \field{F}$ is an \textit{eigenvalue}
+    if there exists a nonzero $v \in V$ such that $Tv = \lambda v$. The vector $v$ is called an \textit{eigenvector}.
+
+    \begin{lemma}
+        Let $M$ be the $n \times n$ matrix with entries all ones. The eigenvalues of $M$ are $n$ with multiplicity 1 and
+        0 with multiplicity $n-1$
+    \end{lemma}
+
+    \begin{proof}
+        All entries of $M$ are equal and nonzero and therefore there is exactly one independent row which gives us that
+        $\operatorname{rk} M = 1$. The rank-nullity theorem states that:
+        \begin{align*}
+            \dim \operatorname{Null}(M) + \operatorname{rk} (M) &= n \\
+            \dim \operatorname{Null}(M) = n-1
+        \end{align*}
+        If $Mv = \lambda v = 0$ and $\lambda = 0$ then $Mv = 0$ and $v \in \operatorname{Null}(M)$. Further,
+        $\sum \lambda_i = \operatorname{Tr}(M) = n$ and $\operatorname{rk} (M) = 1$, we conclude that the remaining
+        eigenvalue of $M$ is $n$.
+    \end{proof}
+
+    \begin{lemma}
+        If the eigenvalues of $P$ are $\lambda_1, \ldots , \lambda_n$ then the eigenvalues of $P+cI$, for any constant $c$
+        are $\lambda_1 + c, \ldots, \lambda_n + c$.
+    \end{lemma}
+
+    \begin{proof}
+        First we note that when $v_i$ is an eigenvector of $P$ that
+        \[
+            (P+cI) v_i = Pv_i + cIv_i = \lambda_i v + c v = (\lambda_i + c)v
+        \]
+        and therefore $\lambda_i$ and eigenvalue of $P$ we have that $\lambda_i + c$ is an eigenvalue of $P+cI$. Now suppose
+        that $w$ is an eigenvector of $P+cI$ and $\lambda$ its associated eigenvalue. Then
+        \[
+            (P+cI)w = \lambda w = Pw + cw
+        \]
+        and therefore $Pw = (\lambda - c)w$. Hence all eigenvalues arise as in the claimed statement.
+    \end{proof}
+
+    \begin{lemma}
+        Suppose we can write $S=A-D$ where $D$ is a diagonal matrix with entries $d \in \field{R}$ and $\lambda, v$ are
+        an eigenvalue and an associated eigenvector of $A$ respectively. Then $\lambda - d$ is an eigenvalue of $S$.
+    \end{lemma}
+
+    \begin{proof}
+        This falls out from using the definitions:
+        \begin{align*}
+            Sv &= (A-D)v \\
+               &= Av - Dv \\
+               &= \lambda v - dv \\
+               &= (\lambda - d) v
+        \end{align*}
+    \end{proof}
+
+    Note that if $\lambda$ is an eigenvalue of $S$ and $v$ an associated eigenvector, then $Sv = \lambda v$ and
+    $(A-D)v = Av - Dv = \lambda v$ which yields $Av = (\lambda + d)v$ and therefore all eigenvalues of $S$ arise in this
+    way.
+
+    \begin{thm}
+        If $S$ is a symmetric matrix, then $S$ has only real eigenvalues.
+    \end{thm}
+
+    \begin{proof}
+        Suppose that $\lambda$ is an eigenvalue and $v$ is an associated eigenvector. Since $S$ has real entries, taking
+        complex conjugates, one gets that $\bar{Sv} = \bar{\lambda v}$ yields $S \bar{v} = \bar{\lambda}\bar{v}$. Then
+        \begin{align*}
+            \lambda (v \cdot \bar{v}) & = \bar{v}^T (\lambda v) = \bar{v}^T Sv \\
+            \bar{\lambda} (v \cdot \bar{v}) &= (\bar{\lambda}\bar{v})^T \cdot v = (S \bar{v})^T v \\
+        \end{align*}
+        We see that the two lines synthesize together to see that $(S\bar{v})^T v = \bar{v}^T Sv$. An eigenvector is nonzero
+        by definition, and therefore $\bar{v} \cdot v \neq 0$. We now have that $\lambda = \bar{lambda}$ and conclude that
+        $\lambda \in \field{R}$.
+    \end{proof}
+
+    \begin{prop}
+        A symmetric $n \times n$ matrix with real entries $S$ has $n$ linearly independent real eigenvectors. One can normalize
+        and choose them to be orthogonal.
+    \end{prop}
+
+    \section{Graphs \& Eigenvalues}
+
+    \begin{lemma}
+        Given a graph $G$, fix two vertices $v_i$ and $v_j$. Let $\lambda_1, \ldots , \lambda_n$ be the eigenvalues of the
+        adjacency matrix $A$.
+        \begin{enumerate}
+            \item [(a)] There exist real numbers $c_1, c_2, \ldots , c_n$ such that
+            \[
+                (A^l)_{ij} = c_1 \lambda_1^l + \cdots + c_n \lambda_n^l
+            \]
+            \item [(b)] Let $U$ be the real orthogonal matrix that diagonalizes $A$; that is $U^{-1}AU =
+            \operatorname{diag}(\lambda_1, \ldots, \lambda_n)$. Then $c_k=u_{ik}u_{jk}$
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        Let $D=\operatorname{diag}(\lambda_1, \ldots, \lambda_n)$. Then
+        \[
+            D^l = (U^{-1}AU)^l = U^{-1} A^l U
+        \]
+        and therefore
+        \[
+            (A^l)_{ij} = \sum u_{ik} \lambda_k^l u_{jk}
+        \]
+        where we've used the fact that $U^{-1} = U^T$ because $U$ is orthogonal.
+    \end{proof}
+
+    \begin{prop}
+        The eigenvalues of the complete graph $K_n$  are
+        \begin{enumerate}
+            \item [(a)] $-1$ with multiplicity $n-1$
+            \item [(b)] $n-1$ with multiplicity 1.
+        \end{enumerate}
+    \end{prop}
+
+    \begin{proof}
+        The adjacency matrix $A$ of $K_n$ can be written $A = M - I_n$ where is the matrix with entries all ones. Apply
+        the lemmas above to conclude that an eigenvalue of $a$ is an eigenvalue of $M$ minus 1. Use the lemma regarding
+        the eigenvalues of $M$ to conclude the statement given.
+    \end{proof}
+
+    \begin{cor}
+        The number of closed walks of length $l$ in $K_n$ from some vertex $v_i$ to itself is
+        \begin{align*}
+        (A^l)_{ij} &= \frac{1}{n} [(n-1)^l + (-1)^l(n-1)] \\
+                   &= \frac{n-1}{n} ((n-1)^{l-1} + (-1)^l) \\
+        \end{align*}
+    \end{cor}
+
+    \begin{proof}
+        We've seen that
+        \begin{align*}
+            (A^l)_{ij} &= \lambda_1^l + \cdots + \lambda_n^l \\
+                       &= (n-1)^l + (-1)^l(n-1) \\
+        \end{align*}
+        and all vertices have the same degree so we divide out by $n$.
+    \end{proof}
+
+    \section{Matrix Tree Theorem}
+
+    \begin{lemma}
+        Let $S$ be a set of $p-1$ edges of $G$. If $S$ does not form the set of edges of a spanning tree, then $\det M_0[S]=0$.
+        If on the other hand, $S$ is the set of edges of a spanning tree then $\det M_0[S] = \pm 1$.
+    \end{lemma}
+
+    \begin{proof}
+        If $S$ is not the edges of a spanning tree then some subset $R \subseteq S$ forms a cycle $C$ in $G$. Suppose the
+        cycle $C$ has edges $f_1, \ldots, f_r$ in that order. Multiply the column indexed by $f_i$ by 1 if in going around
+        $C$ we traverse in the direction of the arrow and multiply by -1 otherwise. Add these modified columns and note
+        that we get the zero column. The multiplication has made the orientation so that the arrows point in the direction
+        of the cycle. These edges have a linear dependence relation and therefore $\det M_0[S]=0$.
+
+        Now suppose $S$ is the set of edges of a spanning tree $T$. Let $e$ be an edge of $T$ which is connected to $v_p$;
+        the vertex that indexed the last row of $M$. We removed this row to get $M_0$. The column of $M_0[S]$ indexed by $e$
+        has exactly one nonzero entry (we deleted the other one) which is $\pm 1$. Remove the row and column containing this
+        nonzero entry. We get a $(p-2) \times (p-2)$ matrix $M_0'$ and  $\det M_0[S] = \pm \det M_0'$ by cofactor expansion.
+        One can finish by induction.
+    \end{proof}
+
+    We define the \textit{complexity} of a graph $G$, denoted $\kappa(G)$, to be the number of spanning trees of $G$.
+
+    \begin{thm}[Matrix Tree Theorem]
+        Let $G$ be a finite connected graph without loops, $L$ its Laplacian and $L_0$ denote $L$ with its last column
+        and last row removed. Then
+        \begin{align*}
+            \det L_0 &= \kappa (G) \\
+                     &= \{\text{\# of spanning trees of } G\} \\
+        \end{align*}
+    \end{thm}
+
+    \begin{proof}
+        Since $L=MM^T$, where $M$ is the incidence matrix for $G$. We then have that $L_0 = M_0 M_0^T$. Apply the
+        Cauchy-Binet theorem to get
+        \[
+            \det L_0 = \sum_{S} \left( \det M_0[S]\right) \left( \det M_0^T[S]\right)
+        \]
+        where $S$ ranges over all $p-1$ element subsets of the set of edges of $G$. Since in general $A^T[S]=A[S]^T$ we
+        have that
+        \[
+            \det L_0 = \sum_S \left( \det M_0[S] \right)^2.
+        \]
+        Since $\det M_0[S] = \pm 1$ if $S$ forms the set of edges of a spanning tree of $G$ and is zero if and only if $S$
+        corresponds to a set of edges for a spanning tree, we conclude that the sum yields $\kappa(G)$ as desired.
+    \end{proof}
+
+    \begin{cor} \leavevmode
+        \begin{enumerate}
+            \item [(a)] Let $G$ be a connected loopless graph with $p$ vertices. Suppose that the eigenvalues of $L(G)$
+            are $\lambda_1, \lambda_2, \ldots, \lambda_{p-1}$ with $\lambda_p = 0$. Then
+            \[
+                \kappa(G) = \frac{1}{p} \lambda_1 \cdot \lambda_2 \cdots \lambda_{p-1}.
+            \]
+            \item [(b)] Suppose that $G$ is also regular of degree $d$ and the eigenvalues of $A(G)$ are $\mu_1, \mu_2, \ldots, \mu_{p-1}$
+            and $\mu_p = d$. Then
+            \[
+                \kappa(G) = \frac{1}{p} (d-\mu_1)(d-\mu_2) \cdots (d-\pm_{p-1})
+            \]
+        \end{enumerate}
+    \end{cor}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item [(a)] Well
+            \[
+                \det(L-xI) = (\lambda_1 - x) \cdots (\lambda_{p-1} - x)(\lambda_p - x) = - x (\lambda_1 -x ) \cdots (\lambda_{p-1} - x)
+            \]
+            and one sees that the coefficient of $x$ is $-\mu_1 \mu_2 \cdots \mu_{p-1} = - p \det L_0 = - \kappa(G)$ and the claim follows.
+            \item [(b)] This is immediate from $(a)$ and the eigenvalues of $A(G)$ when $G$ is regular.
+        \end{enumerate}
+    \end{proof}
+\end{document}

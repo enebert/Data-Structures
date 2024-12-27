@@ -853,46 +853,4 @@ TFAE for $D \subset E$:
 \end{enumerate}
 \end{prop}
 
-\newpage
-
-\section{Minimal Spanning Trees}
-
-\begin{defn}[Minimal Spanning Trees]
-Let $G$ be a connected edge weighted graph. A minimum spanning tree (MST) of $G$ is a subset of the edges traversing all vertices, with the minimal possible total edge weight, and is acyclic.
-\end{defn}
-
-We now consider a weighted version of our graph:
-
-\begin{figure}[h]
-	\centering
-	
-	\begin{tikzpicture}[node distance={25mm}, thick, main/.style={draw,circle}]
-		\node[main] (1) {$1$};
-		\node[main] (2) [below left of = 1] {$2$};
-		\node[main] (3) [below right of = 1] {3};
-		\node[main] (4) [below right of = 2] {4};
-
-		\draw (1) -- node[midway, above, sloped] {1} (2);
-		\draw (1) -- node[midway, above, sloped] {5} (3);
-		\draw (2) -- node[midway, above] {3} (3);
-		\draw (2) -- node[midway, below, sloped] {9} (4);
-		\draw (3) -- node[midway, below, sloped] {2} (4);
-	\end{tikzpicture}
-
-	\caption{Weighted Graph}
-\end{figure} 
-
-\begin{prop}[Cut Property]
-For any cut $K$ of $G$, the edge in $K$ with the least (strictly smaller than all others) weight must belong to all MST.
-\end{prop}
-
-\begin{prop}[Cycle Property]
-Given a cycle $C$ in $G$, the edge in $C$ with the largest weight cannot belong to an MST.
-\end{prop}
-
-\begin{prop}[Minimum Weight Edge Property]
-If the edge with the least weight is unique, then this edge belongs to every MST.
-\end{prop}
-
-
 \end{document}
