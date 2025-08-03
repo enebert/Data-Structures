@@ -3,6 +3,7 @@ module Trees
     
     data BinaryTree a = EmptyTree | Leaf a | Branch (BinaryTree a) a (BinaryTree a) deriving (Show)
     
+    treeSize :: BinaryTree t -> Int
     treeSize EmptyTree = 0
     treeSize (Leaf x) = 1
     treeSize (Branch left x right) = 1 + treeSize left + treeSize right
